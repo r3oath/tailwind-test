@@ -1,12 +1,19 @@
+const whenProd = processor => process.env.NODE_ENV === 'production' && processor;
+
+const purgecss = require('@fullhuman/postcss-purgecss')({
+  content: [
+    './docs/index.html',
+  ],
+  defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+});
+
+const cssnano = require('cssnano');
+
 module.exports = {
   plugins: [
     require('tailwindcss'),
     require('autoprefixer'),
-    process.env.NODE_ENV === 'production' && require('@fullhuman/postcss-purgecss')({
-      content: [
-        './public/index.html',
-      ],
-      defaultExtractor: content => content.match(/[A-Za-z0-9-_:/]+/g) || [],
-    }),
+    whenProd(purgecss),
+    whenProd(cssnano),
   ],
 }
