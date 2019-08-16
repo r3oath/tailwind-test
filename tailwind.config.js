@@ -2,7 +2,7 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        '80-perc': '80%',
+        '80\%': '80%',
       },
     }
   },
